@@ -8,6 +8,8 @@ App contain 3 screens
 *Login screen ->To login User
 *SignUp screen -> To Signup
 *Details screen ->Display details
+* Algorithm used  for encryption/decryption transformation algorithm: “AES/GCM/NoPadding”
+* Android keystore used store keys securely.
 
 ### Architecture:
 Project is developed in kotlin programming  language with Mvvm Architecture and jetpack components.
