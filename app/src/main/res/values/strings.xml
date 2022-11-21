@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SecurityAuthApp</string>
+    <string name="name">Enter your Name</string>
+    <string name="user_name">Enter username</string>
+    <string name="password">Enter password</string>
+    <string name="confirm_password">Confirmation password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="alias">Alias</string>
+</resources>
