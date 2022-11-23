@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.nithi.securityauthapp.databinding.ActivitySignupBinding
 import com.nithi.securityauthapp.utility.ResponseState
@@ -35,21 +36,37 @@ class SignupActivity : AppCompatActivity() {
             saveUserData(name, userName, password, confirmPassword)
         }
 
-        lifecycleScope.launch {
-            viewModel.userData.collect{
-                when(it){
-                    is ResponseState.Error -> {}
-                    is ResponseState.Failed -> {
-
-                    }
-                    is ResponseState.Success ->{
-                        startActivity(Intent(this@SignupActivity,LoginActivity::class.java))
-                        finish()
-                    }
-                   else->{}
+//        lifecycleScope.launch {
+//            viewModel.userData.collect{
+//                when(it){
+//                    is ResponseState.Error -> {}
+//                    is ResponseState.Failed -> {
+//
+//                    }
+//                    is ResponseState.Success ->{
+//                        startActivity(Intent(this@SignupActivity,LoginActivity::class.java))
+//                        finish()
+//                    }
+//                   else->{}
+//                }
+//            }
+//        }
+        viewModel.userData.observe(this, Observer {
+            when(it){
+                is ResponseState.Error -> {
+                    Toast.makeText(this@SignupActivity, "Error", Toast.LENGTH_SHORT).show()
                 }
+                is ResponseState.Failed -> {
+                    Toast.makeText(this@SignupActivity, "Failed", Toast.LENGTH_SHORT).show()
+                }
+                is ResponseState.Success ->{
+                    startActivity(Intent(this@SignupActivity,LoginActivity::class.java))
+                        finish()
+
+                }
+                else->{}
             }
-        }
+        })
 
 
 

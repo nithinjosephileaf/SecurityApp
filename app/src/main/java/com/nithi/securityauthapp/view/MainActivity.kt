@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.userName.text="Hi ${preferenceManager.getName()}"
         binding.signout.setOnClickListener {
+            preferenceManager.clearAll()
             startActivity(Intent(this,LoginActivity::class.java))
             finish()
         }

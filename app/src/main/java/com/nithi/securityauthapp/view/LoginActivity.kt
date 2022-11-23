@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.nithi.securityauthapp.R
 import com.nithi.securityauthapp.databinding.ActivityLoginBinding
@@ -37,25 +39,30 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        lifecycleScope.launch {
-            viewModel.userData.collect{
-                when(it){
-                    is ResponseState.Error -> {}
-                    is ResponseState.Failed -> {
-
-                    }
-                    is ResponseState.Success ->{
-                        if (it.data){
-                            startActivity(Intent(this@LoginActivity,MainActivity::class.java))
-                            finish()
-                        }else{
-                            showToast("Invalid user name and password")
-                        }
-
-                    }
-                    else->{}
+//        lifecycleScope.launch {
+//            viewModel.userData.collect{
+//
+//            }
+//        }
+        viewModel.userData.observe(this, Observer {
+            when(it){
+                is ResponseState.Error -> {
+                    Toast.makeText(this@LoginActivity, "Error", Toast.LENGTH_SHORT).show()
                 }
+                is ResponseState.Failed -> {
+                    Toast.makeText(this@LoginActivity, "Failed", Toast.LENGTH_SHORT).show()
+                }
+                is ResponseState.Success ->{
+                    if (it.data){
+                        startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+                        finish()
+                    }else{
+                        showToast("Invalid user name and password")
+                    }
+
+                }
+                else->{}
             }
-        }
+        })
     }
 }
