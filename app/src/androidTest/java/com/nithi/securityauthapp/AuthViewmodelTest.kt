@@ -45,19 +45,20 @@ class AuthViewmodelTest : TestCase() {
         authViemodel= AuthViemodel(repository = authRepository)
     }
     @Test
-    fun testDat() {
+    fun testData() {
         GlobalScope.launch(Dispatchers.Main) {
             authViemodel.saveUserDetail("test","test1","123")
-            val  result=authViemodel.userData.getOrAwaitValue().takeIf {
+            val  result=authViemodel.userData.getOrAwaitValue()
+            result.takeIf {
                 when(it){
                     is ResponseState.Error -> TODO()
                     is ResponseState.Failed -> TODO()
-                    is ResponseState.Success ->  it.data==true
+                    is ResponseState.Success -> it.data==true
                 }
             }
-            assert(result!=null)
-
+            assertEquals(true,result)
         }
+
 
 
     }
